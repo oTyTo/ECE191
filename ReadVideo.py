@@ -1,15 +1,15 @@
 import cv2
 import numpy as np
 
-window_size = 20
-window_avg_delta = 5
+window_size = 10
+window_avg_delta = 15
 
 cv = cv2.VideoCapture("video/no_light_marked.mp4")
 pv = cv2.VideoCapture("video/PV_calibrated.mp4")
 
 ## TODO don't include this
 ## fast-forward to interesting part of video for development
-for i in range(200):
+for i in range(280):
     cv.read()
     pv.read()
 
@@ -29,7 +29,7 @@ while(cv.isOpened() and pv.isOpened()):
 
     ## Edge detection here
     cv_edges = cv2.Canny(cv_frame,100,120)
-    pv_edges = cv2.Canny(pv_frame,100,120)
+    pv_edges = cv2.Canny(pv_frame,230,250)
 
     cv_np_edges = np.array(cv_edges)
     pv_np_edges = np.array(pv_edges)
