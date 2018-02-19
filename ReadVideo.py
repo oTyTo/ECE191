@@ -1,47 +1,14 @@
 import cv2
+import scipy.io as sio
 import numpy as np
+import matplotlib.pyplot as plt
 
 window_size = 10
 window_avg_delta = 15
 
-<<<<<<< HEAD
-cap = cv2.VideoCapture("video\No_Cali.mp4")
-rec = cv2.VideoCapture("video\PV_Cali.mp4")
-fgbg = cv2.createBackgroundSubtractorMOG2(200, 2)
-kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
-while(cap.isOpened()):
-    a, frame = cap.read() # get the figure
-    #back = frame
-    b, back  = rec.read() # get the background
-    
-    cv2.imshow('frame', frame) 
-    cv2.waitKey(1)
-    print cap.get(1)
-    cv2.imshow('back', back) 
-    cv2.waitKey(1)
-    print rec.get(1) #print frame No
-    
-
-    ## Edge detection here
-    edges_f = cv2.Canny(frame,100,120)
-    edges_b = cv2.Canny(back,100,120)
-   
-    #apply mult gaussian
-    fgmask = fgbg.apply(edges_f)
-    cv2.imshow('sub',fgmask)
-    cv2.waitKey(1)
-    #edges = edges_f - edges_b
-
-    #print edges_f[100:140][100:140]
-    #print edges_b[100:140][100:140]
-    #print edges[100:140][100:140]
-
-    #break;
-
-    cv2.imshow('edge_f', edges_f)
-=======
-cv = cv2.VideoCapture("video/no_light_marked.mp4")
-pv = cv2.VideoCapture("video/PV_calibrated.mp4")
+cv = cv2.VideoCapture("video/No_Cali.mp4")
+pv = cv2.VideoCapture("video/PV_Cali.mp4")
+transmat = sio.loadmat('Scale_transfer.mat')#read the transfer matrix
 
 ## TODO don't include this
 ## fast-forward to interesting part of video for development
@@ -62,6 +29,11 @@ while(cv.isOpened() and pv.isOpened()):
     """
 
     print cv.get(1) #print frame No
+
+    ## Transfer CV
+    cv_frame = cv2.warpPerspective(cv_frame,transmat['M'],(1920,1080))
+    cv2.imshow('transfercv', cv_frame) 
+    cv2.waitKey(1)
 
     ## Edge detection here
     cv_edges = cv2.Canny(cv_frame,100,120)
@@ -92,7 +64,6 @@ while(cv.isOpened() and pv.isOpened()):
         start_y = end_y
 
     cv2.imshow('extracted_subject', extracted_subject)
->>>>>>> 23f258f0257fddad08a58176211a5dd158b2d2b0
     cv2.waitKey(1)
 
     # get width and height for pv_np_edges
@@ -104,11 +75,6 @@ while(cv.isOpened() and pv.isOpened()):
     cv2.waitKey(1)
     cv2.imshow('pv_edges', pv_edges)
     cv2.waitKey(1)
-<<<<<<< HEAD
-   # cv2.imshow('edges', edges)
-    #cv2.waitKey(1)    
-=======
->>>>>>> 23f258f0257fddad08a58176211a5dd158b2d2b0
     ##
 
     if cv.get(1) == cv.get(7):
