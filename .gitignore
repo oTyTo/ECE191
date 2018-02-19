@@ -1,6 +1,7 @@
-#ignore file
 images/
 video/
 test.py
 PerspectiveTransfer.py
 inputvideo.py
+.DS_Store
+.idea/
