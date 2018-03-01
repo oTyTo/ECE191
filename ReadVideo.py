@@ -8,36 +8,41 @@ window_avg_delta = 15
 
 cv = cv2.VideoCapture("video/No_Cali.mp4")
 pv = cv2.VideoCapture("video/PV_Cali.mp4")
-transmat = sio.loadmat('Scale_transfer.mat')#read the transfer matrix
+transmat = sio.loadmat('Scale_transfer.mat')  # read the transfer matrix
 
-## TODO don't include this
-## fast-forward to interesting part of video for development
-for i in range(280):
+# TODO don't include this
+# fast-forward to interesting part of video for development
+"""
+for i in range(306):
     cv.read()
     pv.read()
+"""
 
 while(cv.isOpened() and pv.isOpened()):
 
     _, cv_frame = cv.read() # get the figure
     _, pv_frame = pv.read() # get the background
 
-    """
     cv2.imshow('cv_frame', cv_frame)
     cv2.waitKey(1)
     cv2.imshow('pv_frame', pv_frame)
     cv2.waitKey(1)
-    """
-
     print cv.get(1) #print frame No
+
+    continue
+
+    # only run once every three frames
+    if (cv.get(1) % 3) != 0:
+        continue
 
     ## Transfer CV
     cv_frame = cv2.warpPerspective(cv_frame,transmat['M'],(1920,1080))
-    cv2.imshow('transfercv', cv_frame) 
-    cv2.waitKey(1)
+    #cv2.imshow('transfercv', cv_frame)
+    #cv2.waitKey(1)
 
     ## Edge detection here
-    cv_edges = cv2.Canny(cv_frame,100,120)
-    pv_edges = cv2.Canny(pv_frame,230,250)
+    cv_edges = cv2.Canny(cv_frame,50,60)
+    pv_edges = cv2.Canny(pv_frame,50,60)
 
     cv_np_edges = np.array(cv_edges)
     pv_np_edges = np.array(pv_edges)
@@ -64,7 +69,7 @@ while(cv.isOpened() and pv.isOpened()):
         start_y = end_y
 
     cv2.imshow('extracted_subject', extracted_subject)
-    cv2.waitKey(1)
+    cv2.waitKey(0)
 
     # get width and height for pv_np_edges
     pv_np_height = pv_np_edges.shape[0]
