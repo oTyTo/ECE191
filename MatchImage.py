@@ -3,10 +3,10 @@ import scipy.io as sio
 import cv2
 import matplotlib.pyplot as plt
 
+#def Matchimage (cv,pv) :
 MIN_MATCH_COUNT = 10
-
-cv = cv2.imread('NO_Cali.jpg')          # cv
-pv = cv2.imread('PV_Cali.jpg') # pv
+cv = cv2.imread('images/cvcali.jpg')          # cv
+pv = cv2.imread('images/backcali.jpg') # pv
 
 img1 = cv2.cvtColor(cv, cv2.COLOR_BGR2GRAY)
 img2 = cv2.cvtColor(pv, cv2.COLOR_BGR2GRAY)
@@ -41,14 +41,15 @@ if len(good)>MIN_MATCH_COUNT:
     dst_pts = np.float32([ kp2[m.trainIdx].pt for m in good ]).reshape(-1,1,2)
     M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC,5.0)
     sio.savemat('Scale_Transfer.mat',{'M':M})
+#    return M
     # matchesMask = mask.ravel().tolist()
     # h,w = img1.shape
     # pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
     # dst = cv2.perspectiveTransform(pts,M)
     # img2 = cv2.polylines(img2,[np.int32(dst)],True,255,3, cv2.LINE_AA)
-    img3 = cv2.warpPerspective(cv,M,(1920,1080))
+    # img3 = cv2.warpPerspective(cv,M,(1920,1080))
     #plt.imshow(img3, 'gray'),plt.show()
-    cv2.imwrite('cvScale_Cali.jpg', img3) 
+    # cv2.imwrite('cvScale_Cali.jpg', img3) 
 else:
     print( "Not enough matches are found - {}/{}".format(len(good), MIN_MATCH_COUNT) )
     matchesMask = None

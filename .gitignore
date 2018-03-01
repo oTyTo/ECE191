@@ -4,4 +4,8 @@ test.py
 PerspectiveTransfer.py
 inputvideo.py
 .DS_Store
+Scale_transfer.mat
 .idea/
+BackSub.py
+SIFTcompare.py
+siftFeature.py
