@@ -5,3 +5,6 @@ PerspectiveTransfer.py
 inputvideo.py
 .DS_Store
 .idea/
+BackSub.py
+SIFTcompare.py
+siftFeature.py
