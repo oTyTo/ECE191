@@ -10,11 +10,11 @@ FLANN_INDEX_KDTREE = 1
 def calibrate(img1, img2):
 
     # develop gray-scale
-    img1_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    img1_gray = cv2.resize(cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY),(1920,1080))
     img2_gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
     # Instantiate SIFT detector
-    sift = cv2.xfeatures2d.SIFT_create()
+    sift = cv2.xfeatures2d.SIFT_create(0,3,0.01,10,1)
 
     # find the keypoints and descriptors with SIFT
     kp1, des1 = sift.detectAndCompute(img1_gray,None)
