@@ -12,24 +12,20 @@ transmat = sio.loadmat('Scale_transfer.mat')  # read the transfer matrix
 
 # TODO don't include this
 # fast-forward to interesting part of video for development
-"""
 for i in range(306):
     cv.read()
     pv.read()
-"""
 
 while(cv.isOpened() and pv.isOpened()):
 
     _, cv_frame = cv.read() # get the figure
     _, pv_frame = pv.read() # get the background
 
-    cv2.imshow('cv_frame', cv_frame)
-    cv2.waitKey(1)
-    cv2.imshow('pv_frame', pv_frame)
-    cv2.waitKey(1)
+    #cv2.imshow('cv_frame', cv_frame)
+    #cv2.waitKey(1)
+    #cv2.imshow('pv_frame', pv_frame)
+    #cv2.waitKey(1)
     print cv.get(1) #print frame No
-
-    continue
 
     # only run once every three frames
     if (cv.get(1) % 3) != 0:
@@ -69,17 +65,17 @@ while(cv.isOpened() and pv.isOpened()):
         start_y = end_y
 
     cv2.imshow('extracted_subject', extracted_subject)
-    cv2.waitKey(0)
+    cv2.waitKey(1)
 
     # get width and height for pv_np_edges
     pv_np_height = pv_np_edges.shape[0]
     pv_np_width = pv_np_edges.shape[1]
 
     #
-    cv2.imshow('cv_edges', cv_edges)
-    cv2.waitKey(1)
-    cv2.imshow('pv_edges', pv_edges)
-    cv2.waitKey(1)
+    #cv2.imshow('cv_edges', cv_edges)
+    #cv2.waitKey(1)
+    #cv2.imshow('pv_edges', pv_edges)
+    #cv2.waitKey(1)
     ##
 
     if cv.get(1) == cv.get(7):
