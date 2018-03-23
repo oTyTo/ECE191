@@ -1,5 +1,6 @@
 import Calibration
 import cv2
+import matplotlib.pyplot as plt
 
 cv = cv2.imread('CV_Grid_no_cursor.jpg')
 pv = cv2.imread('PV_Grid.jpg')
