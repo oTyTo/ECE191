@@ -25,47 +25,12 @@ while(cv.isOpened() and pv.isOpened()):
 
     ## Transfer CV
     cv_frame = cv2.warpPerspective(cv_frame,M,(1920,1080))
-    #cv2.imshow('transfercv', cv_frame)
-    #cv2.waitKey(1)
 
     pv_np = np.array(pv_frame)
     cv_np = np.array(cv_frame)
 
-    cv_np_height, cv_np_width, _ = cv_np.shape
-
-    print "here1"
-    extracted_subject = np.zeros((cv_np_height, cv_np_width, 3), np.uint8)
-    for y in range(cv_np_height):
-        print "here " + str(y)
-        for x in range(cv_np_width):
-            if np.average(cv_np[y,x]) != np.average(pv_np[y,x]):
-                extracted_subject[y,x] = (0,0,255)
-
-    print "here2"
-    cv2.imshow('cv', cv_np)
-    cv2.imshow('pv', pv_np)
-    cv2.imshow('extracted', extracted_subject)
-    cv2.waitKey(1)
-
-    if cv.get(1) == cv.get(7):
-        break
-    else:
-        cv.set(1, (cv.get(1)+3))
-        pv.set(1, (pv.get(1)+3))
-
-    continue
-
-    print cv_np[0][0]
-    #cv_np = cv_np * (1,1,.1)
-    #cv_np = cv_np * .01
-    cv_np = cv_np - 10
-    #cv_np = cv_np - (10, 5, 5)
-    #cv_np = cv_np - .5
-    print cv_np[0][0]
-    #cv2.imshow('cv_after_adjustment', cv_np)
-    #cv2.waitKey(1)
-
     # get width and height for cv_np_edges
+    cv_np_height, cv_np_width, _ = cv_np.shape
 
     # get starting pixel of every window
     start_y = 0
@@ -92,11 +57,6 @@ while(cv.isOpened() and pv.isOpened()):
 
             start_x = end_x
         start_y = end_y
-
-    #cv2.imshow('extracted_subject', extracted_subject)
-    cv2.imshow('masked_cv', cv_np)
-    #cv2.imshow('masked_pv', pv_np)
-    cv2.waitKey(1)
 
     if cv.get(1) == cv.get(7):
         break
